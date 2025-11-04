@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Lecture 1 - Interactive Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #ffffff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .instructor {
+            font-size: 1.2rem;
+            opacity: 0.95;
+            margin-top: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .nav {
+            position: sticky;
+            top: 0;
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            margin-bottom: 2rem;
+        }
+
+        .nav-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            list-style: none;
+            justify-content: center;
+        }
+
+        .nav-list li a {
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .nav-list li a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
+        }
+
+        .topic {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #667eea;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .topic h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .topic h3 {
+            color: #764ba2;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .code-container {
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .code-header {
+            background: #2d3748;
+            color: #a0aec0;
+            padding: 0.5rem 1rem;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+
+        pre {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 0 0 8px 8px;
+            overflow-x: auto;
+            margin: 0;
+        }
+
+        code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .copy-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.4rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .copy-btn.copied {
+            background: #48bb78;
+        }
+
+        .duration {
+            display: inline-block;
+            background: #edf2f7;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .info-box {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+
+        .note {
+            background: #fff5f5;
+            border-left: 4px solid #fc8181;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 5px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .instructor {
+                font-size: 1rem;
+            }
+
+            .topic {
+                padding: 1.5rem;
+            }
+
+            .nav-list {
+                flex-direction: column;
+            }
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-top: 0.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .keyword {
+            color: #667eea;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🚀 React Lecture 1</h1>
+        <p class="instructor">Instructor: <strong>Anas Yousaf</strong></p>
+        <p style="opacity: 0.9; margin-top: 0.5rem;">CEO Dot and Cross Technology & Whisper Tunnel</p>
+    </div>
+
+    <nav class="nav">
+        <ul class="nav-list">
+            <li><a href="#what-is-react">What is React?</a></li>
+            <li><a href="#what-is-jsx">What is JSX?</a></li>
+            <li><a href="#setup">Setup Local Environment</a></li>
+            <li><a href="#understanding-app">Understanding our App</a></li>
+            <li><a href="#rewrite-app">Re-write App</a></li>
+            <li><a href="#first-component">Our 1st Component</a></li>
+            <li><a href="#import-export">Import-Export</a></li>
+            <li><a href="#markup-jsx">Writing Markup in JSX</a></li>
+            <li><a href="#fragment">React Fragment</a></li>
+            <li><a href="#curly-braces">JSX with Curly Braces</a></li>
+            <li><a href="#structuring">Structuring Components</a></li>
+            <li><a href="#style">Style Components</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Topic 1: What is React? -->
+        <section id="what-is-react" class="topic">
+            <h2>📚 What is React? <span class="duration">13:04</span></h2>
+            
+            <p><span class="keyword">React</span> is a popular JavaScript library for building user interfaces, particularly single-page applications where you need a fast, interactive user experience. Developed and maintained by Facebook (Meta), React has become one of the most widely used front-end libraries in the world.</p>
+
+            <h3>Key Features of React:</h3>
+            <ul>
+                <li><strong>Component-Based Architecture:</strong> Build encapsulated components that manage their own state</li>
+                <li><strong>Virtual DOM:</strong> Efficient rendering through a lightweight copy of the actual DOM</li>
+                <li><strong>Declarative:</strong> Design simple views for each state in your application</li>
+                <li><strong>Learn Once, Write Anywhere:</strong> Develop new features without rewriting existing code</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>💡 Did you know?</strong> React was first deployed on Facebook's News Feed in 2011 and on Instagram in 2012.
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Simple React Example</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>import React from 'react';
+
+function Welcome() {
+  return &lt;h1&gt;Hello, React!&lt;/h1&gt;;
+}
+
+export default Welcome;</code></pre>
+            </div>
+        </section>
+
+        <!-- Topic 2: What is JSX? -->
+        <section id="what-is-jsx" class="topic">
+            <h2>🎨 What is JSX? <span class="duration">03:41</span></h2>
+            
+            <p><span class="keyword">JSX (JavaScript XML)</span> is a syntax extension for JavaScript that allows you to write HTML-like code within JavaScript. It makes it easier to write and understand the structure of your components.</p>
+
+            <h3>Why JSX?</h3>
+            <ul>
+                <li>Makes code more readable and easier to understand</li>
+                <li>Prevents injection attacks by escaping embedded values</li>
+                <li>Allows you to use the full power of JavaScript in your markup</li>
+                <li>Faster than regular JavaScript because it performs optimizations</li>
+            </ul>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>JSX Example</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>// JSX allows you to write HTML-like syntax
+const element = &lt;h1&gt;Hello, JSX!&lt;/h1&gt;;
+
+// JSX with JavaScript expressions
+const name = 'Anas';
+const greeting = &lt;h1&gt;Hello, {name}!&lt;/h1&gt;;
+
+// JSX with attributes
+const link = &lt;a href="https://reactjs.org"&gt;Learn React&lt;/a&gt;;</code></pre>
+            </div>
+
+            <div class="note">
+                <strong>⚠️ Important:</strong> JSX is not valid JavaScript. It needs to be transpiled to regular JavaScript using tools like Babel.
+            </div>
+        </section>
+
+        <!-- Topic 3: Setup Local Environment -->
+        <section id="setup" class="topic">
+            <h2>⚙️ Set up Local Environment <span class="duration">06:44</span></h2>
+            
+            <p>To start developing React applications, you need to set up your local development environment.</p>
+
+            <h3>Prerequisites:</h3>
+            <ul>
+                <li><strong>Node.js:</strong> Download and install from nodejs.org (includes npm)</li>
+                <li><strong>Code Editor:</strong> VS Code, Sublime Text, or any editor of your choice</li>
+                <li><strong>Terminal/Command Prompt:</strong> For running commands</li>
+            </ul>
+
+            <h3>Create React App:</h3>
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Using Create React App (Deprecated but still works)</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>npx create-react-app my-app
+cd my-app
+npm start</code></pre>
+            </div>
+
+            <h3>Using Vite (Modern & Recommended):</h3>
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Create React App with Vite</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>npm create vite@latest my-react-app -- --template react
+cd my-react-app
+npm install
+npm run dev</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Tip:</strong> Vite is faster and more modern than Create React App. It provides instant server start and lightning-fast Hot Module Replacement (HMR).
+            </div>
+        </section>
+
+        <!-- Topic 4: Understanding our App -->
+        <section id="understanding-app" class="topic">
+            <h2>🔍 Understanding our App <span class="duration">08:22</span></h2>
+            
+            <p>Let's explore the structure of a typical React application.</p>
+
+            <h3>Project Structure:</h3>
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Typical React Project Structure</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>my-react-app/
+├── node_modules/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+├── src/
+│   ├── App.js
+│   ├── App.css
+│   ├── index.js
+│   └── index.css
+├── package.json
+└── README.md</code></pre>
+            </div>
+
+            <h3>Key Files Explained:</h3>
+            <ul>
+                <li><strong>public/index.html:</strong> The single HTML file for your app</li>
+                <li><strong>src/index.js:</strong> The entry point of your React application</li>
+                <li><strong>src/App.js:</strong> The main component of your application</li>
+                <li><strong>package.json:</strong> Contains dependencies and scripts</li>
+            </ul>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>src/index.js - Entry Point</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  &lt;React.StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/React.StrictMode&gt;
+);</code></pre>
+            </div>
+        </section>
+
+        <!-- Topic 5: Re-write App -->
+        <section id="rewrite-app" class="topic">
+            <h2>✏️ Re-write App <span class="duration">03:15</span></h2>
+            
+            <p>Let's rewrite the default App component to understand how React components work.</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Original App.js (Default)</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>import logo from './logo.svg';
+import './App.css';
+
+function App() {
+  return (
+    &lt;div className="App"&gt;
+      &lt;header className="App-header"&gt;
+        &lt;img src={logo} className="App-logo" alt="logo" /&gt;
+        &lt;p&gt;Edit &lt;code&gt;src/App.js&lt;/code&gt; and save to reload.&lt;/p&gt;
+      &lt;/header&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Rewritten App.js (Clean Version)</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>import './App.css';
+
+function App() {
+  return (
+    &lt;div className="App"&gt;
+      &lt;h1&gt;Welcome to My React App&lt;/h1&gt;
+      &lt;p&gt;This is my first custom React component!&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+            </div>
+        </section>
+
+        <!-- Topic 6: Our 1st Component -->
+        <section id="first-component" class="topic">
+            <h2>🎯 Our 1st Component <span class="duration">08:46</span></h2>
+            
+            <p>Components are the building blocks of any React application. Let's create our first custom component!</p>
+
+            <h3>What is a Component?</h3>
+            <p>A component is a reusable piece of UI that can be composed together to create complex interfaces. Think of components as JavaScript functions that return HTML elements.</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Creating Your First Component</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>// Greeting.js
+function Greeting() {
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;Hello, Welcome to React!&lt;/h2&gt;
+      &lt;p&gt;This is my first custom component.&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default Greeting;</code></pre>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Using the Component in App.js</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>import Greeting from './Greeting';
+
+function App() {
+  return (
+    &lt;div className="App"&gt;
+      &lt;Greeting /&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default App;</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Best Practice:</strong> Component names should always start with a capital letter to distinguish them from regular HTML elements.
+            </div>
+        </section>
+
+        <!-- Topic 7: Import-Export -->
+        <section id="import-export" class="topic">
+            <h2>📦 Import-Export <span class="duration">04:45</span></h2>
+            
+            <p>Import and export statements allow you to split your code into multiple files and reuse components across your application.</p>
+
+            <h3>Export Types:</h3>
+            
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Default Export</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>// Button.js
+function Button() {
+  return &lt;button&gt;Click Me&lt;/button&gt;;
+}
+
+export default Button;
+
+// Import in another file
+import Button from './Button';</code></pre>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Named Export</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>// utils.js
+export function add(a, b) {
+  return a + b;
+}
+
+export function subtract(a, b) {
+  return a - b;
+}
+
+// Import in another file
+import { add, subtract } from './utils';</code></pre>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Mixed Exports</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>// helpers.js
+export function formatDate(date) {
+  return date.toLocaleDateString();
+}
+
+export function formatTime(date) {
+  return date.toLocaleTimeString();
+}
+
+function MainHelper() {
+  return "Main Helper";
+}
+
+export default MainHelper;
+
+// Import
+import MainHelper, { formatDate, formatTime } from './helpers';</code></pre>
+            </div>
+        </section>
+
+        <!-- Topic 8: Writing Markup in JSX -->
+        <section id="markup-jsx" class="topic">
+            <h2>📝 Writing Markup in JSX <span class="duration">05:52</span></h2>
+            
+            <p>JSX lets you write HTML-like markup inside JavaScript, but there are some important rules to follow.</p>
+
+            <h3>JSX Rules:</h3>
+            <ul>
+                <li><strong>Return a single root element:</strong> Wrap multiple elements in a parent tag</li>
+                <li><strong>Close all tags:</strong> Even self-closing tags like &lt;img /&gt; must have a closing slash</li>
+                <li><strong>Use camelCase:</strong> Most HTML and SVG attributes are written in camelCase</li>
+                <li><strong>className instead of class:</strong> Use className for CSS classes</li>
+            </ul>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Correct JSX Markup</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>function Profile() {
+  return (
+    &lt;div&gt;
+      &lt;img 
+        src="avatar.jpg" 
+        alt="Profile" 
+        className="profile-img"
+      /&gt;
+      &lt;h1&gt;John Doe&lt;/h1&gt;
+      &lt;p&gt;Web Developer&lt;/p&gt;
+      &lt;label htmlFor="email"&gt;Email:&lt;/label&gt;
+      &lt;input 
+        id="email" 
+        type="email" 
+        placeholder="Enter email"
+      /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <div class="note">
+                <strong>⚠️ Common Mistakes:</strong>
+                <ul>
+                    <li>Using "class" instead of "className"</li>
+                    <li>Forgetting to close self-closing tags</li>
+                    <li>Returning multiple elements without a wrapper</li>
+                    <li>Using "for" instead of "htmlFor" in labels</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Topic 9: React Fragment -->
+        <section id="fragment" class="topic">
+            <h2>🧩 React Fragment <span class="duration">01:50</span></h2>
+            
+            <p>React Fragments let you group multiple elements without adding extra nodes to the DOM.</p>
+
+            <h3>Why Use Fragments?</h3>
+            <p>Sometimes you need to return multiple elements from a component, but you don't want to add an unnecessary div wrapper that could affect your CSS or DOM structure.</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Using React.Fragment</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>import React from 'react';
+
+function List() {
+  return (
+    &lt;React.Fragment&gt;
+      &lt;h2&gt;Shopping List&lt;/h2&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Apples&lt;/li&gt;
+        &lt;li&gt;Bananas&lt;/li&gt;
+        &lt;li&gt;Oranges&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/React.Fragment&gt;
+  );
+}</code></pre>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Short Syntax (Recommended)</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>function List() {
+  return (
+    &lt;&gt;
+      &lt;h2&gt;Shopping List&lt;/h2&gt;
+      &lt;ul&gt;
+        &lt;li&gt;Apples&lt;/li&gt;
+        &lt;li&gt;Bananas&lt;/li&gt;
+        &lt;li&gt;Oranges&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Tip:</strong> The short syntax &lt;&gt;...&lt;/&gt; is preferred unless you need to pass keys or attributes, in which case use &lt;React.Fragment&gt;.
+            </div>
+        </section>
+
+        <!-- Topic 10: JSX with Curly Braces -->
+        <section id="curly-braces" class="topic">
+            <h2>🔢 JSX with Curly Braces <span class="duration">02:27</span></h2>
+            
+            <p>Curly braces {} let you embed JavaScript expressions directly in your JSX markup.</p>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Using JavaScript Expressions in JSX</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>function UserProfile() {
+  const name = "Anas Yousaf";
+  const age = 25;
+  const skills = ["React", "JavaScript", "Node.js"];
+  
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{name}&lt;/h1&gt;
+      &lt;p&gt;Age: {age}&lt;/p&gt;
+      &lt;p&gt;Birth Year: {2024 - age}&lt;/p&gt;
+      &lt;p&gt;Skills: {skills.join(", ")}&lt;/p&gt;
+      &lt;p&gt;{age &gt;= 18 ? "Adult" : "Minor"}&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Using Objects and Functions</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>function ProductCard() {
+  const product = {
+    name: "Laptop",
+    price: 999,
+    inStock: true
+  };
+  
+  const formatPrice = (price) => `$${price.toFixed(2)}`;
+  
+  return (
+    &lt;div&gt;
+      &lt;h2&gt;{product.name}&lt;/h2&gt;
+      &lt;p&gt;Price: {formatPrice(product.price)}&lt;/p&gt;
+      &lt;p&gt;Status: {product.inStock ? "Available" : "Out of Stock"}&lt;/p&gt;
+      &lt;img 
+        src="laptop.jpg" 
+        alt={product.name}
+        style={{
+          width: "200px",
+          borderRadius: "10px"
+        }}
+      /&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>What You Can Put in Curly Braces:</h3>
+            <ul>
+                <li>Variables and constants</li>
+                <li>Expressions (mathematical operations, string concatenation)</li>
+                <li>Function calls</li>
+                <li>Ternary operators</li>
+                <li>Array methods (map, filter, etc.)</li>
+            </ul>
+        </section>
+
+        <!-- Topic 11: Structuring Components -->
+        <section id="structuring" class="topic">
+            <h2>🏗️ Structuring Components <span class="duration">05:53</span></h2>
+            
+            <p>Organizing your components properly makes your application more maintainable and scalable.</p>
+
+            <h3>Recommended Folder Structure:</h3>
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Component Organization</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>src/
+├── components/
+│   ├── common/
+│   │   ├── Button.js
+│   │   ├── Input.js
+│   │   └── Card.js
+│   ├── layout/
+│   │   ├── Header.js
+│   │   ├── Footer.js
+│   │   └── Sidebar.js
+│   └── features/
+│       ├── UserProfile.js
+│       └── ProductList.js
+├── App.js
+└── index.js</code></pre>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Component Composition Example</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>// Card.js - Reusable component
+function Card({ children, title }) {
+  return (
+    &lt;div className="card"&gt;
+      &lt;h3&gt;{title}&lt;/h3&gt;
+      &lt;div className="card-content"&gt;
+        {children}
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}
+
+export default Card;
+
+// UserProfile.js - Using the Card component
+import Card from './components/common/Card';
+
+function UserProfile() {
+  return (
+    &lt;Card title="User Profile"&gt;
+      &lt;p&gt;Name: Anas Yousaf&lt;/p&gt;
+      &lt;p&gt;Role: CEO&lt;/p&gt;
+      &lt;p&gt;Company: Dot and Cross Technology&lt;/p&gt;
+    &lt;/Card&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Best Practices for Component Structure:</h3>
+            <ul>
+                <li><strong>Single Responsibility:</strong> Each component should do one thing well</li>
+                <li><strong>Reusability:</strong> Create generic components that can be used in multiple places</li>
+                <li><strong>Composition:</strong> Build complex UIs by combining simple components</li>
+                <li><strong>Clear Naming:</strong> Use descriptive names that indicate the component's purpose</li>
+            </ul>
+
+            <div class="info-box">
+                <strong>💡 Pro Tip:</strong> Keep components small and focused. If a component is doing too much, break it into smaller components.
+            </div>
+        </section>
+
+        <!-- Topic 12: Style Components -->
+        <section id="style" class="topic">
+            <h2>🎨 Style Components <span class="duration">05:49</span></h2>
+            
+            <p>There are multiple ways to style React components. Let's explore the most common methods.</p>
+
+            <h3>1. Inline Styles:</h3>
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Inline Styling with Objects</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>function StyledButton() {
+  const buttonStyle = {
+    backgroundColor: '#667eea',
+    color: 'white',
+    padding: '10px 20px',
+    border: 'none',
+    borderRadius: '5px',
+    cursor: 'pointer',
+    fontSize: '16px'
+  };
+  
+  return (
+    &lt;button style={buttonStyle}&gt;
+      Click Me
+    &lt;/button&gt;
+  );
+}
+
+// Or directly inline
+function DirectInline() {
+  return (
+    &lt;div style={{ 
+      backgroundColor: '#f7fafc', 
+      padding: '20px',
+      margin: '10px' 
+    }}&gt;
+      Content
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>2. CSS Stylesheets:</h3>
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Component.js</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>import './Button.css';
+
+function Button() {
+  return (
+    &lt;button className="custom-button"&gt;
+      Styled Button
+    &lt;/button&gt;
+  );
+}</code></pre>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Button.css</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>.custom-button {
+  background-color: #667eea;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.custom-button:hover {
+  background-color: #764ba2;
+  transform: translateY(-2px);
+}</code></pre>
+            </div>
+
+            <h3>3. CSS Modules:</h3>
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Component with CSS Module</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>// Card.js
+import styles from './Card.module.css';
+
+function Card() {
+  return (
+    &lt;div className={styles.card}&gt;
+      &lt;h2 className={styles.title}&gt;Card Title&lt;/h2&gt;
+      &lt;p className={styles.content}&gt;Card content&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+            </div>
+
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Card.module.css</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>.card {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.title {
+  color: #667eea;
+  margin-bottom: 10px;
+}
+
+.content {
+  color: #333;
+  line-height: 1.6;
+}</code></pre>
+            </div>
+
+            <h3>4. Conditional Styling:</h3>
+            <div class="code-container">
+                <div class="code-header">
+                    <span>Dynamic Class Names</span>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <pre><code>function Alert({ type, message }) {
+  // Conditional className
+  const alertClass = type === 'error' ? 'alert-error' : 'alert-success';
+  
+  return (
+    &lt;div className={`alert ${alertClass}`}&gt;
+      {message}
+    &lt;/div&gt;
+  );
+}
+
+// Template literals for multiple classes
+function Button({ primary, large }) {
+  return (
+    &lt;button 
+      className={`btn ${primary ? 'btn-primary' : 'btn-secondary'} ${large ? 'btn-large' : ''}`}
+    &gt;
+      Click Me
+    &lt;/button&gt;
+  );
+}</code></pre>
+            </div>
+
+            <h3>Styling Comparison:</h3>
+            <div class="info-box">
+                <strong>When to use each method:</strong>
+                <ul>
+                    <li><strong>Inline Styles:</strong> Dynamic styles that change based on props or state</li>
+                    <li><strong>CSS Stylesheets:</strong> Global styles and simple component styling</li>
+                    <li><strong>CSS Modules:</strong> Component-scoped styles to avoid naming conflicts</li>
+                    <li><strong>Styled Components/Emotion:</strong> Advanced styling with JavaScript (requires additional libraries)</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Summary Section -->
+        <section class="topic" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h2 style="color: white;">📚 Lecture Summary</h2>
+            <p>Congratulations! You've completed React Lecture 1. Here's what we covered:</p>
+            <ul style="color: white;">
+                <li>✅ Understanding React and its core concepts</li>
+                <li>✅ Learning JSX syntax and rules</li>
+                <li>✅ Setting up a local development environment</li>
+                <li>✅ Understanding React project structure</li>
+                <li>✅ Creating and composing components</li>
+                <li>✅ Working with imports and exports</li>
+                <li>✅ Writing proper JSX markup</li>
+                <li>✅ Using React Fragments</li>
+                <li>✅ Embedding JavaScript in JSX with curly braces</li>
+                <li>✅ Organizing component structure</li>
+                <li>✅ Styling components in multiple ways</li>
+            </ul>
+            <div style="margin-top: 2rem; padding: 1rem; background: rgba(255,255,255,0.1); border-radius: 10px;">
+                <strong>🎯 Next Steps:</strong>
+                <p>Practice building small components and experiment with different styling approaches. In the next lecture, we'll dive into React State and Props!</p>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 2rem; color: #667eea;">
+            <p><strong>Instructor: Anas Yousaf</strong></p>
+            <p>CEO - Dot and Cross Technology & Whisper Tunnel</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">Happy Coding! 🚀</p>
+        </footer>
+    </div>
+
+    <script>
+        function copyCode(button) {
+            const codeBlock = button.closest('.code-container').querySelector('code');
+            const code = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                button.textContent = 'Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                button.textContent = 'Error!';
+                setTimeout(() => {
+                    button.textContent = 'Copy';
+                }, 2000);
+            });
+        }
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('.nav-list a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Add scroll animation for topics
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.topic').forEach(topic => {
+            observer.observe(topic);
+        });
+    </script>
+</body>
+</html>
